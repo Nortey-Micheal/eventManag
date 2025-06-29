@@ -17,7 +17,7 @@ export const createBooking = async (req, res) => {
     const availableSeats = await Booking.getAvailableSeats(eventId)
 
     if (availableSeats < seatsRequested) {
-      res.status(404).json({ message: 'Requested seats more than available seats' })
+      res.status(404).json({ message: `Requested seats more than available seats. Only ${availableSeats} seats available.` })
     }
 
     const booking = new Booking({
