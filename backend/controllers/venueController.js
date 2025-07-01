@@ -5,14 +5,15 @@ import Venue from "../models/venueModel.js";
 export const createVenue = async (req, res) => {
   const { userId, name, capacity, location } = req.body;
   if (!userId ) {
-    return res.status(401).json({ message: 'Unauthorized: Only Admins or Organizers can create venues' });
+    return res.status(401).json({ message: 'Unauthorized: Invalid user' });
   }
 
   const user = await User.findById(userId);
   if (!user) {
     return res.status(401).json({ message: 'Unauthorized: Invalid user' });
   }
-    if (user.role === 'Attendee') return res.status(401).json({ message: 'Unauthorized: Invalid user' });
+
+  if (user.role === 'Attendee') return res.status(401).json({  message: 'Unauthorized: Only Admins or Organizers can create venues'});
 
   try {
     const venue = new Venue({ name, capacity, location });
