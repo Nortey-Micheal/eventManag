@@ -18,7 +18,7 @@ export const createVenue = async (req, res) => {
   try {
     const venue = new Venue({ name, capacity, location });
     await venue.save();
-    res.status(201).json({ venue });
+    return res.status(201).json({ venue });
   } catch (err) {
     return res.status(400).json({ message: err.message });
   }
